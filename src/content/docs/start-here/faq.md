@@ -3,6 +3,4 @@ title: FAQs
 description: Questions, asked frequently
 ---
 
-Commonly asked questions.
-
-
+Commonly asked questions go here
