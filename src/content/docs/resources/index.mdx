@@ -1,0 +1,15 @@
+---
+title: F3 Nation Links
+description: Links to other F3 Nation resources
+prev: false
+---
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import { nationLinks } from '../../data/resources.ts';
+
+Below you will find links to various F3 resources.
+
+<CardGrid>
+  {nationLinks.map(link => (
+    <LinkCard title={link.title} href={link.url} description={link.description} target="_blank" />
+  ))}
+</CardGrid>

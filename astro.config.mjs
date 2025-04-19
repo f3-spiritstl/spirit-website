@@ -12,7 +12,19 @@ export default defineConfig({
 				dark: './src/assets/icon-dark.svg',
 				replacesTitle: true,
 			},
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+			lastUpdated: true,
+			social: [
+				{
+					icon: 'instagram',
+					label: 'Instagram',
+					href: 'https://instagram.com/f3spiritstl'
+				},
+				{
+					icon: 'github',
+					label: 'GitHub',
+					href: 'https://github.com/f3-spiritstl'
+				}
+			],
 			sidebar: [
 				{
 					label: 'Start Here',
@@ -29,8 +41,9 @@ export default defineConfig({
 					label: 'Reference',
 					items: [
 						// Items here will use the page title as the label.
-						// If you want to change that, you can use the `label` property.
+						// If you want to change that, you can use the `label` property here.
 						{ slug: 'reference/intro' },
+						{ slug: 'reference/locations' },
 						{ slug: 'reference/lexicon' },
 						{ slug: 'reference/exicon' },
 						{ slug: 'reference/appsicon' },
@@ -38,12 +51,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Resources',
-					items: [
-						{ label: 'F3 Nation', link: 'https://f3nation.com' },
-						{ label: 'Maps', link: 'https://maps.f3nation.com' },
-						{ label: 'Workout Finder', link: 'https://f3near.me' },
-						{ label: 'F3 Gear', link: 'https://f3gear.com' },
-					]
+					autogenerate: { directory: 'resources' },
 				},
 			],
 		}),
