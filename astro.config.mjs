@@ -43,6 +43,7 @@ export default defineConfig({
 						// Items here will use the page title as the label.
 						// If you want to change that, you can use the `label` property here.
 						{ slug: 'reference/intro' },
+						{ slug: 'reference/locations' },
 						{ slug: 'reference/lexicon' },
 						{ slug: 'reference/exicon' },
 						{ slug: 'reference/appsicon' },

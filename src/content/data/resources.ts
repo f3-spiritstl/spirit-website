@@ -23,7 +23,7 @@ export const nationLinks: ResourceLink[] = [
     {
         title: "F3 Gear",
         url: "https://f3gear.com",
-        description: "Get your swag here so everyone knows how hardcore you are",
+        description: "Get some swag so everyone knows how hardcore you are 🤘",
     },
 ]
 
