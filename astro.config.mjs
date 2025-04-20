@@ -20,6 +20,11 @@ export default defineConfig({
 					href: 'https://instagram.com/f3spiritstl'
 				},
 				{
+					icon: 'youtube',
+					label: 'YouTube',
+					href: 'https://youtube.com/@f3spiritstl'
+				},
+				{
 					icon: 'github',
 					label: 'GitHub',
 					href: 'https://github.com/f3-spiritstl'
