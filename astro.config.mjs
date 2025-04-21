@@ -13,6 +13,9 @@ export default defineConfig({
 				replacesTitle: true,
 			},
 			lastUpdated: true,
+			markdown: {
+				headingLinks: false,
+			},
 			social: [
 				{
 					icon: 'instagram',
