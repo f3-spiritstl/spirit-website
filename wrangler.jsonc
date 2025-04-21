@@ -1,9 +1,4 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "website",
-  // Update to today's date
-  "compatibility_date": "2025-03-25",
-  "assets": {
-    "directory": "./dist"
-  }
+  "name": "spirit-website",
+  "pages_build_output_dir": "./dist"
 }
