@@ -27,3 +27,20 @@ export const nationLinks: ResourceLink[] = [
     },
 ]
 
+export const slackLinks: ResourceLink[] = [
+    {
+        title: "What is Slack?",
+        url: "https://slack.com/help/articles/115004071768-What-is-Slack",
+        description: "Official Slack introduction",
+    },
+    {
+        title: "How to use Slack",
+        url: "https://slack.com/help/articles/360059928654-How-to-use-Slack--your-quick-start-guide",
+        description: "A quick start guide to using Slack",
+    },
+    {
+        title: "Slack Glossary",
+        url: "https://slack.com/help/articles/213817348-Slack-glossary",
+        description: "A glossary of common Slack terms",
+    },
+]
