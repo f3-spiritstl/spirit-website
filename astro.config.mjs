@@ -16,6 +16,9 @@ export default defineConfig({
 			markdown: {
 				headingLinks: false,
 			},
+			customCss: [
+				'./src/styles/custom.css',
+			],
 			social: [
 				{
 					icon: 'instagram',
