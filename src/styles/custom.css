@@ -1,0 +1,75 @@
+/* Dark mode colors. */
+:root {
+	--sl-color-accent-low: #232426;
+	--sl-color-accent: #666a72;
+	--sl-color-accent-high: #c7c8cb;
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #eaeef1;
+	--sl-color-gray-2: #c3c9cd;
+	--sl-color-gray-3: #9ba6ac;
+	--sl-color-gray-4: #505a60;
+	--sl-color-gray-5: #303a3f;
+	--sl-color-gray-6: #1f282d;
+	--sl-color-black: #15191b;
+}
+/* Light mode colors. */
+:root[data-theme='light'] {
+	--sl-color-accent-low: #d6d7d9;
+	--sl-color-accent: #4b4e56;
+	--sl-color-accent-high: #313236;
+	--sl-color-white: #15191b;
+	--sl-color-gray-1: #1f282d;
+	--sl-color-gray-2: #303a3f;
+	--sl-color-gray-3: #505a60;
+	--sl-color-gray-4: #828d94;
+	--sl-color-gray-5: #bdc3c6;
+	--sl-color-gray-6: #eaeef1;
+	--sl-color-gray-7: #f4f7f8;
+	--sl-color-black: #ffffff;
+}
+
+/* Override pagination link styles. */
+.pagination-links {
+	display: flex !important;
+	justify-content: space-between;
+	margin-top: 2rem;
+
+	& > a {
+		flex-basis: unset;
+		flex-grow: unset;
+		width: fit-content;
+
+		padding: unset;
+		border: unset;
+		box-shadow: unset;
+		opacity: 0.75;
+
+		&[rel="prev"] {
+			text-align: right;
+			margin-right: auto;
+		}
+
+		&[rel="next"] {
+			text-align: left;
+			margin-left: auto;
+		}
+
+		& > span {
+			font-size: 0.75rem;
+
+			.link-title {
+				font-size: 1rem;
+			}
+		}
+
+		& > svg {
+			align-self: self-end;
+			font-size: 1.25rem;
+			margin-bottom: 1px;
+		}
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
