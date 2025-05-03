@@ -11,9 +11,9 @@
     "deploy": "npx wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.34.0",
+    "@astrojs/starlight": "^0.34.1",
     "@zachleat/table-saw": "^1.0.6",
-    "astro": "^5.6.1",
+    "astro": "^5.7.10",
     "sharp": "^0.32.5"
   },
   "devDependencies": {
