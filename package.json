@@ -8,15 +8,16 @@
     "build": "npx astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "npx wrangler deploy"
+    "deploy": "npx wrangler deploy",
+    "wdev": "node node_modules/astro/astro.js dev",
+    "wbuild": "node node_modules/astro/astro.js build"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.34.1",
     "@zachleat/table-saw": "^1.0.6",
-    "astro": "^5.7.10",
-    "sharp": "^0.32.5"
-  },
-  "devDependencies": {
+    "astro": "^5.7.11",
+    "build": "^0.1.4",
+    "sharp": "^0.32.5",
     "wrangler": "^4.12.0"
   }
 }

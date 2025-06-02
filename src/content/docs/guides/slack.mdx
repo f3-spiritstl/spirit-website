@@ -61,11 +61,18 @@ Some important things to note:
 - AO channel/where this BB posts
 - Typeahead user picker can be tricky, especially for users on mobile. This is unfortunately a Slack thing, and not something that we can control.
 
-> **TODO:** add the screen recording of the BB form. Astro doesn't seem to like the markdown syntax for videos - it's asking for a height and width. Might try and convert to a different format, but might have to use a `video` tag.
+<video controls><source src="/videos/slack/demo_backblast.mp4" /></video>
 
 ---
 
-##### Qsource Backblasts
+##### QSource Backblasts
+
+To post a backblast for a QSource event, you should also use the Slackblast app. Follow the same mechanism as above, but make sure to do the following:
+
+1. Invoke the `/slackblast` command in the `#qsource` channel. This is important.
+2. In the field for AO, select the AO at which QSource took place. In the past, manual backblast entries required you to put `#qsource` as the value for the AO. Do not do that.
+3. In the field for "Choose where to post this", select "Current channel" from the dropdown.
+4. Optional, but helpful: in the "Event Type" dropdown, select QSource from the list.
 
 ### Qsignups
 
