@@ -2,6 +2,9 @@
   "name": "spirit-website",
   "type": "module",
   "version": "0.0.1",
+  "engine": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
