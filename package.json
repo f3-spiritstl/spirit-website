@@ -2,6 +2,9 @@
   "name": "spirit-website",
   "type": "module",
   "version": "0.0.1",
+  "engine": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -13,7 +16,7 @@
     "wbuild": "node node_modules/astro/astro.js build"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.34.0",
+    "@astrojs/starlight": "^0.34.1",
     "@zachleat/table-saw": "^1.0.6",
     "astro": "^5.7.11",
     "build": "^0.1.4",
