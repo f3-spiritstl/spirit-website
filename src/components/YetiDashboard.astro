@@ -162,8 +162,59 @@ const TITLE = "Yeti Studio";
     transition: width .25s ease;
   }
 
-  /* Optional: tame heavy shadows in light mode if you add any later */
-  html[data-theme="light"] .yd-wrap { box-shadow: none; }
+  /* Card wrapper styled like your Yeti header card, tokenized for light/dark */
+  .studio-card{
+    background: var(--sl-color-bg-soft);
+    border: 1px solid var(--sl-color-gray-6);
+    border-radius: 16px;
+    overflow: hidden; /* so header and body share rounded corners */
+  }
+
+  /* Header bar with subtle separation */
+  .studio-head{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:12px 16px;
+    background: var(--sl-color-bg);
+    border-bottom: 1px solid var(--sl-color-gray-6);
+  }
+  .studio-title{
+    margin:0; font-size:1rem; letter-spacing:.3px; font-weight:800;
+    color: var(--sl-color-text);
+  }
+
+  /* Button matches your btn but scoped here */
+  .studio-btn{
+    text-decoration:none;
+    display:inline-block;
+    padding:8px 12px; border-radius:10px;
+    color: var(--sl-color-text);
+    background: linear-gradient(180deg, var(--sl-color-bg-soft), var(--sl-color-bg));
+    border: 1px solid var(--sl-color-gray-6);
+  }
+  .studio-btn:hover{ filter: brightness(1.03); }
+
+  /* Body area with the responsive iframe */
+  .studio-body{ padding: 12px 12px 16px; }
+
+  /* 16:9 responsive embed; change padding-top for other ratios (4:3 = 75%) */
+  .ls-embed{
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    border: 1px solid var(--sl-color-gray-6);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--sl-color-bg-soft);
+  }
+  .ls-embed > iframe{
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; border: 0;
+    background: var(--sl-color-bg-soft);
+  }
+
+  html[data-theme="light"] .studio-card, .yd-wrap {
+    box-shadow: 0 6px 12px rgba(0,0,0,.06);
+  }
 </style>
 
 <div class="yd-wrap" id="yetiRoot">
@@ -237,6 +288,31 @@ const TITLE = "Yeti Studio";
         </table>
       </div>
     </aside>
+  </div>
+</div>
+
+<div class="studio-card">
+  <div class="studio-head">
+    <h3 class="studio-title">Yeti Dashboard</h3>
+    <a
+      href="https://lookerstudio.google.com/reporting/5e5bc2b0-6cef-4401-978e-386f09fee847/page/p_j64vl8i8td"
+      target="_blank" rel="noopener noreferrer"
+      class="studio-btn"
+    >
+      Open in Looker →
+    </a>
+  </div>
+
+  <div class="studio-body">
+    <div class="ls-embed">
+      <iframe
+        src=https://lookerstudio.google.com/embed/reporting/5e5bc2b0-6cef-4401-978e-386f09fee847/page/p_j64vl8i8td"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Spirit STL – Yeti Metrics"
+      ></iframe>
+    </div>
   </div>
 </div>
 
@@ -428,8 +504,6 @@ const TITLE = "Yeti Studio";
     $k.rem.textContent = remaining;
 
     // Thermometer
-    //const pct = clamp((total / goal) * 100, 0, 100);
-    //$thermo.style.height = pct + "%";
     const pct = clamp((total / goal) * 100, 0, 100);
     if ($progressFill) $progressFill.style.width = pct + "%";
 
@@ -450,8 +524,11 @@ const TITLE = "Yeti Studio";
     }
 
     // Distance blurb
+    const allZero = !state.bd && !state.q && !state.coq && !state.fng && !state.ruck && !state.uao;
     if (remaining === 0){
       $distance.textContent = "Welcome to the Band of Yeti. ❄️🔥";
+    } else if (allZero) {
+      $distance.innerHTML = `Start by logging a <strong>BD</strong> or a <strong>Run/Ruck</strong>.`;
     } else {
       // find best single next move
       const best = marginals
