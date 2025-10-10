@@ -3,110 +3,96 @@ const TITLE = "Yeti Studio";
 ---
 
 <style>
-  :root {
-    --bg: #0a0f14;
-    --card: #121a22;
-    --muted: #6b7a8a;
-    --text: #e6f1ff;
-    --accent: #4fd1ff;
-    --good: #8ef5a8;
-    --warn: #ffd166;
-    --bad: #ff7b7b;
-  }
+  /* No custom :root palette — use Starlight tokens so light/dark "just works" */
 
-  * {
-    box-sizing: border-box
-  }
+  * { box-sizing: border-box; }
 
   .yd-wrap {
-    background: var(--card);
-    border: 1px solid #203040;
+    background: var(--sl-color-bg-soft);
+    border: 1px solid var(--sl-color-gray-6);
     border-radius: 16px;
-    padding: 18px
+    padding: 18px;
   }
 
   .grid {
     display: grid;
-    gap: 16px
+    gap: 16px;
   }
-
-  @media(min-width:900px) {
-    .grid {
-      grid-template-columns: 1.2fr 1fr
-    }
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: 1.2fr 1fr; }
   }
 
   .h {
     margin: 0 0 8px;
-    font-size: 1.2rem
+    font-size: 1.2rem;
+    color: var(--sl-color-text);
   }
 
   .muted {
-    color: var(--muted);
-    font-size: .92rem
+    color: var(--sl-color-gray-3);
+    font-size: .92rem;
   }
 
   .row {
     display: grid;
     gap: 10px;
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 1fr 1fr;
   }
-
-  @media(max-width:620px) {
-    .row {
-      grid-template-columns: 1fr
-    }
+  @media (max-width: 620px) {
+    .row { grid-template-columns: 1fr; }
   }
+  .row > * { margin: 0 !important; }
 
   label {
     display: grid;
     gap: 6px;
     font-size: .9rem;
-    color: var(--muted)
+    color: var(--sl-color-gray-3);
   }
 
-  input {
-    background: #0e151c;
-    color: var(--text);
-    border: 1px solid #223344;
+  input, select, textarea {
+    background: var(--sl-color-bg);
+    color: var(--sl-color-text);
+    border: 1px solid var(--sl-color-gray-6);
     border-radius: 10px;
     padding: 10px 12px;
-    font: inherit
+    font: inherit;
   }
-  .row > * {
-    margin: 0 !important;
-  }
-  .kpis { 
+
+  .kpis {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(3,1fr)
+    grid-template-columns: repeat(3, minmax(0,1fr));
   }
-  .kpis > * {
-    margin: 0 !important;
-  }
-  .kpi{
-    background:#0e151c;
-    border:1px solid #223344;
-    border-radius:12px;
-    padding:12px;
-    text-align:center
+  .kpis > * { margin: 0 !important; }
+
+  .kpi {
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-gray-6);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
   }
   .kpi .num {
     font-weight: 800;
-    font-size: 1.4rem
+    font-size: 1.4rem;
+    color: var(--sl-color-text);
   }
+
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: .95rem
+    font-size: .95rem;
+    color: var(--sl-color-text);
   }
   th, td {
     padding: 10px;
-    border-bottom: 1px solid #213040
+    border-bottom: 1px solid var(--sl-color-gray-6);
   }
   th {
     text-align: left;
-    color: var(--muted)
+    color: var(--sl-color-gray-3);
+    font-weight: 600;
   }
 
   .pill {
@@ -114,46 +100,54 @@ const TITLE = "Yeti Studio";
     font-size: .75rem;
     padding: 3px 8px;
     border-radius: 999px;
-    border: 1px solid #2c3f52;
-    color: #b8d4ff
+    border: 1px solid var(--sl-color-gray-6);
+    background: var(--sl-color-bg);
+    color: var(--sl-color-text);
   }
 
   .flex {
     display: flex;
     gap: 10px;
     align-items: center;
-    flex-wrap: wrap
+    flex-wrap: wrap;
   }
 
   .btn {
     cursor: pointer;
-    background: linear-gradient(180deg, #1b2a38, #15222e);
-    border: 1px solid #2a4056;
-    color: var(--text);
+    background: linear-gradient(180deg, var(--sl-color-bg-soft), var(--sl-color-bg));
+    border: 1px solid var(--sl-color-gray-6);
+    color: var(--sl-color-text);
     border-radius: 10px;
-    padding: 10px 12px
+    padding: 10px 12px;
   }
+  .btn:hover { filter: brightness(1.03); }
 
   .yeti-title {
     font-weight: 800;
     letter-spacing: .6px;
-    margin: 0 0 4px
+    margin: 0 0 4px;
+    color: var(--sl-color-text);
   }
-  /* Minimal progress bar */
-.progress {
-  height: 8px;
-  border-radius: 999px;
-  background: #0b1218;
-  border: 1px solid #223344;
-  overflow: hidden;
-}
-.progress > i {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #4fd1ff, #00bcd4);
-  transition: width .25s ease;
-}
+
+  /* Minimal progress bar (theme-aware) */
+  .progress {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-gray-6);
+    overflow: hidden;
+  }
+  .progress > i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4fd1ff, #00bcd4);
+
+    transition: width .25s ease;
+  }
+
+  /* Optional: tame heavy shadows in light mode if you add any later */
+  html[data-theme="light"] .yd-wrap { box-shadow: none; }
 </style>
 
 <div class="yd-wrap" id="yetiRoot">
