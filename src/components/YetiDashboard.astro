@@ -1,0 +1,388 @@
+---
+const TITLE = "Yeti Studio";
+---
+
+<style>
+  :root { --bg:#0a0f14; --card:#121a22; --muted:#6b7a8a; --text:#e6f1ff; --accent:#4fd1ff; --good:#8ef5a8; --warn:#ffd166; --bad:#ff7b7b;}
+  *{box-sizing:border-box}
+  .yd-wrap{background:var(--card);border:1px solid #203040;border-radius:16px;padding:18px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:900px){.grid{grid-template-columns:1.2fr 1fr}}
+  .h{margin:0 0 8px;font-size:1.2rem}
+  .muted{color:var(--muted);font-size:.92rem}
+  .row{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  @media(max-width:620px){.row{grid-template-columns:1fr}}
+  label{display:grid;gap:6px;font-size:.9rem;color:var(--muted)}
+  input{background:#0e151c;color:var(--text);border:1px solid #223344;border-radius:10px;padding:10px 12px;font:inherit}
+  .row > * {
+    margin: 0 !important;
+  }
+  .kpis { 
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3,1fr)
+  }
+  .kpis > * {
+    margin: 0 !important;
+  }
+  .kpi{
+    background:#0e151c;
+    border:1px solid #223344;
+    border-radius:12px;
+    padding:12px;
+    text-align:center
+  }
+  .kpi .num{font-weight:800;font-size:1.4rem}
+  .thermo{height:220px;border-radius:16px;background:#0b1218;border:1px solid #223344;position:relative;overflow:hidden}
+  .thermo-fill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#67e8f9,#00bcd4);transition:height .25s ease}
+  .thermo-cap{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:78px;height:78px;background:radial-gradient(circle at 35% 35%,#8ef5ff,#00bcd4 60%,#007a8a);border-radius:50%;border:3px solid #13414e}
+  table{width:100%;border-collapse:collapse;font-size:.95rem}
+  th,td{padding:10px;border-bottom:1px solid #213040}
+  th{text-align:left;color:var(--muted)}
+  .pill{display:inline-block;font-size:.75rem;padding:3px 8px;border-radius:999px;border:1px solid #2c3f52;color:#b8d4ff}
+  .flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .btn{cursor:pointer;background:linear-gradient(180deg,#1b2a38,#15222e);border:1px solid #2a4056;color:var(--text);border-radius:10px;padding:10px 12px}
+  .yeti-title{font-weight:800;letter-spacing:.6px;margin:0 0 4px}
+  /* Minimal progress bar */
+.progress {
+  height: 8px;
+  border-radius: 999px;
+  background: #0b1218;
+  border: 1px solid #223344;
+  overflow: hidden;
+}
+.progress > i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4fd1ff, #00bcd4);
+  transition: width .25s ease;
+}
+</style>
+
+<div class="yd-wrap" id="yetiRoot">
+  <h2 class="yeti-title">{TITLE}</h2>
+  <div class="muted">Winter season: <span id="seasonLabel"></span> • <span id="timeStatus"></span></div>
+
+  <div class="grid" style="margin-top:14px">
+    <!-- LEFT: Inputs -->
+    <section>
+      <h3 class="h">Enter Your Totals</h3>
+      <div class="row">
+        <label># of Beatdowns
+          <input type="number" id="in-bd" min="0" inputmode="numeric" />
+        </label>
+        <label># of Unique AOs
+          <input type="number" id="in-uao" min="0" inputmode="numeric" />
+        </label>
+      </div>
+      <div class="row">
+        <label># of Qs (max 10)
+          <input type="number" id="in-q" min="0" inputmode="numeric" />
+        </label>
+        <label># of Co-Qs (max 10)
+          <input type="number" id="in-coq" min="0" inputmode="numeric" />
+        </label>
+      </div>
+      <div class="row">
+        <label># of FNGs
+          <input type="number" id="in-fng" min="0" inputmode="numeric" />
+        </label>
+        <label># of Runs / Rucks
+          <input type="number" id="in-ruck" min="0" inputmode="numeric" />
+        </label>
+      </div>
+
+      <div class="flex" style="margin-top:10px">
+        <button class="btn" id="resetBtn">Reset</button>
+        <span class="pill" id="saveHint">Auto-saved</span>
+      </div>
+
+      <div style="margin-top:16px">
+        <h3 class="h">What’s Left?</h3>
+        <div class="muted" id="distanceText">–</div>
+        <div style="margin-top:8px;overflow:auto">
+          <table>
+            <thead><tr><th>Category</th><th>Current</th><th>Next +Pts</th></tr></thead>
+            <tbody id="marginals"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Output -->
+    <aside>
+      <h3 class="h">Progress</h3>
+      <div class="kpis">
+        <div class="kpi"><span class="num" id="k-total">0</span><div class="muted">Points</div></div>
+        <div class="kpi"><span class="num" id="k-goal">1000</span><div class="muted">Goal</div></div>
+        <div class="kpi"><span class="num" id="k-rem">1000</span><div class="muted">Remaining</div></div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="muted">Progress</div>
+        <div class="progress"><i id="progressFill"></i></div>
+      </div>
+
+      <div style="margin-top:16px">
+        <h3 class="h">Breakdown</h3>
+        <table>
+          <tbody id="breakdown"></tbody>
+        </table>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script type="module">
+  // ======= EASY-TWEAK CONFIG =======
+  const CONFIG = {
+    goal: 1000,
+    season: {
+      // Local winter season (inclusive start, inclusive end)
+      start: "2025-12-21",
+      end:   "2026-03-20",
+    },
+    points: {
+      // simple linear categories
+      beatdown: { per: 10 },         // each BD = 10
+      ruckrun:  { per: 40 },         // each ruck/run = 40
+      fng:      { per: 40 },         // each FNG = 40
+
+      // scaling categories
+      // Qs: 5,10,15,... up to 10 Qs counted max
+      q: {
+        scaleStart: 5,
+        scaleStep: 5,
+        maxCounted: 10,              // hard cap on counted Qs
+      },
+
+      coq: {
+        scaleStart: 2.5,
+        scaleStep: 2.5,
+        maxCounted: 10,              // hard cap on counted Qs
+      },
+
+      // Unique AOs: same scale system; no cap by default (set maxCounted if desired)
+      uniqueAO: {
+        scaleStart: 5,
+        scaleStep: 5,
+        maxCounted: 19,            // e.g., set 20 to cap; null for no cap
+      },
+    },
+    storageKey: "yeti.v2.counts"
+  };
+
+  // ======= DOM =======
+  const el = (s) => document.querySelector(s);
+  const $in = {
+    bd:   el("#in-bd"),
+    q:    el("#in-q"),
+    fng:  el("#in-fng"),
+    ruck: el("#in-ruck"),
+    uao:  el("#in-uao"),
+    coq:  el("#in-coq"),
+  };
+  const $k = {
+    total: el("#k-total"),
+    goal:  el("#k-goal"),
+    rem:   el("#k-rem"),
+  };
+  const $break = el("#breakdown");
+  const $marg = el("#marginals");
+  const $thermo = el("#thermo");
+  const $progressFill = el("#progressFill");
+  const $distance = el("#distanceText");
+  const $saveHint = el("#saveHint");
+  const $seasonLabel = el("#seasonLabel");
+  const $timeStatus = el("#timeStatus");
+  const $resetBtn = el("#resetBtn");
+
+  // ======= UTIL =======
+  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+  function toInt(v){ return Math.max(0, parseInt(v || "0", 10) || 0); }
+
+  function seriesSum(start, step, n){
+    // arithmetic series: start, start+step, ... for n terms
+    if (n <= 0) return 0;
+    const last = start + step * (n - 1);
+    return (n * (start + last)) / 2;
+  }
+
+  function scalingPoints(count, { scaleStart, scaleStep, maxCounted = null }){
+    const n = maxCounted == null ? count : Math.min(count, maxCounted);
+    return seriesSum(scaleStart, scaleStep, n);
+  }
+
+  function nextMarginal(count, { scaleStart, scaleStep, maxCounted = null }){
+    // marginal points for adding ONE more item given current count
+    const next = count + 1;
+    if (maxCounted != null && next > maxCounted) return 0;
+    return scaleStart + scaleStep * (next - 1);
+  }
+
+  function formatDateRangeISO(startISO, endISO){
+    const s = new Date(startISO + "T00:00:00");
+    const e = new Date(endISO + "T23:59:59");
+    const opts = { month: "short", day: "numeric", year: "numeric" };
+    return `${s.toLocaleDateString(undefined, opts)} → ${e.toLocaleDateString(undefined, opts)}`;
+  }
+
+  function seasonStatus(startISO, endISO){
+    const now = new Date();
+    const start = new Date(startISO + "T00:00:00");
+    const end   = new Date(endISO + "T23:59:59");
+
+    if (now < start){
+      const days = Math.ceil((start - now) / 86400000);
+      return { phase: "pre", text: `${days} day${days===1?"":"s"} until season starts` };
+    } else if (now > end){
+      return { phase: "post", text: `Season ended` };
+    } else {
+      const totalDays = Math.ceil((end - start) / 86400000);
+      const daysLeft  = Math.ceil((end - now) / 86400000);
+      return { phase: "active", text: `${daysLeft} day${daysLeft===1?"":"s"} left (${totalDays - daysLeft}/${totalDays} elapsed)` };
+    }
+  }
+
+  // ======= STATE =======
+  const state = { bd:0, q:0, coq:0, fng:0, ruck:0, uao:0 };
+
+  function load(){
+    try {
+      const raw = localStorage.getItem(CONFIG.storageKey);
+      if (raw){
+        const obj = JSON.parse(raw);
+        Object.assign(state, obj);
+      }
+    } catch {}
+  }
+  function save(){
+    localStorage.setItem(CONFIG.storageKey, JSON.stringify(state));
+    $saveHint.textContent = "Saved ✓";
+    setTimeout(() => $saveHint.textContent = "Auto-saved", 900);
+  }
+
+  // ======= CALC =======
+  function computePoints(s){
+    const { points } = CONFIG;
+
+    const bdPts   = s.bd   * points.beatdown.per;
+    const rrPts   = s.ruck * points.ruckrun.per;
+    const fngPts  = s.fng  * points.fng.per;
+
+    const coqPts  = scalingPoints(s.coq, points.coq);
+    const qPts    = scalingPoints(s.q, points.q);
+    const uaoPts  = scalingPoints(s.uao, points.uniqueAO);
+
+    const total = bdPts + rrPts + fngPts + qPts + coqPts + uaoPts;
+
+    return {
+      total,
+      breakdown: [
+        ["Beatdowns", bdPts, `${s.bd} × ${points.beatdown.per}`],
+        ["Runs/Rucks", rrPts, `${s.ruck} × ${points.ruckrun.per}`],
+        ["FNGs", fngPts, `${s.fng} × ${points.fng.per}`],
+        ["Qs", qPts, `5,10,15… (${Math.min(s.q, points.q.maxCounted ?? s.q)}/${points.q.maxCounted ?? "∞"})`],
+        ["Co-Qs", coqPts, "Each counts as half a Q point"],
+        ["Unique AOs", uaoPts, `5,10,15… (${Math.min(s.uao, points.uniqueAO.maxCounted ?? s.uao)}/${points.uniqueAO.maxCounted ?? "∞"})`],
+      ],
+      marginals: [
+        ["Beatdown", s.bd, points.beatdown.per],
+        ["Run/Ruck", s.ruck, points.ruckrun.per],
+        ["FNG", s.fng, points.fng.per],
+        ["Q", s.q, nextMarginal(s.q, points.q)],
+        ["Co-Qs", s.coq, nextMarginal(s.coq, points.coq)],
+        ["Unique AO", s.uao, nextMarginal(s.uao, points.uniqueAO)],
+      ],
+    };
+  }
+
+  function render(){
+    // write inputs
+    $in.bd.value = state.bd;
+    $in.q.value = state.q;
+    $in.coq.value = state.coq;
+    $in.fng.value = state.fng;
+    $in.ruck.value = state.ruck;
+    $in.uao.value = state.uao;
+
+    // season label + status
+    $seasonLabel.textContent = formatDateRangeISO(CONFIG.season.start, CONFIG.season.end);
+    $timeStatus.textContent = seasonStatus(CONFIG.season.start, CONFIG.season.end).text;
+
+    // calc
+    const { total, breakdown, marginals } = computePoints(state);
+    const goal = CONFIG.goal;
+    const remaining = Math.max(0, goal - total);
+
+    // KPIs
+    $k.total.textContent = total;
+    $k.goal.textContent = goal;
+    $k.rem.textContent = remaining;
+
+    // Thermometer
+    //const pct = clamp((total / goal) * 100, 0, 100);
+    //$thermo.style.height = pct + "%";
+    const pct = clamp((total / goal) * 100, 0, 100);
+    if ($progressFill) $progressFill.style.width = pct + "%";
+
+    // Breakdown table
+    $break.innerHTML = "";
+    for (const [label, pts, note] of breakdown){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${label}</td><td><strong>${pts}</strong></td><td class="muted">${note}</td>`;
+      $break.appendChild(tr);
+    }
+
+    // Marginals (what’s the next +points if you add ONE)
+    $marg.innerHTML = "";
+    for (const [label, cur, next] of marginals){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${label}</td><td>${cur}</td><td><strong>${next}</strong></td>`;
+      $marg.appendChild(tr);
+    }
+
+    // Distance blurb
+    if (remaining === 0){
+      $distance.textContent = "You’re thawed. ❄️🔥 Victory sip of coffee authorized.";
+    } else {
+      // find best single next move
+      const best = marginals
+        .map(([label, cur, next]) => ({ label, cur, next }))
+        .sort((a,b)=> b.next - a.next)[0];
+
+      $distance.innerHTML = `You need <strong>${remaining}</strong> more points. 
+        Your best next move is <strong>${best.label}</strong> (+${best.next}).`;
+    }
+  }
+
+  function readInputs(){
+    state.bd   = toInt($in.bd.value);
+    state.q    = toInt($in.q.value);
+    state.coq  = toInt($in.coq.value);
+    state.fng  = toInt($in.fng.value);
+    state.ruck = toInt($in.ruck.value);
+    state.uao  = toInt($in.uao.value);
+  }
+
+  // Events
+  [$in.bd, $in.q, $in.coq, $in.fng, $in.ruck, $in.uao].forEach(inp => {
+    inp.addEventListener("input", () => {
+      readInputs();
+      save();
+      render();
+    });
+  });
+
+  $resetBtn.addEventListener("click", () => {
+    if (!confirm("Clear your local Yeti counts?")) return;
+    state.bd = state.q = state.coq = state.fng = state.ruck = state.uao = 0;
+    save();
+    render();
+  });
+
+  // Init
+  load();
+  render();
+</script>
