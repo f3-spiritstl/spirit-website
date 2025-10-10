@@ -3,17 +3,76 @@ const TITLE = "Yeti Studio";
 ---
 
 <style>
-  :root { --bg:#0a0f14; --card:#121a22; --muted:#6b7a8a; --text:#e6f1ff; --accent:#4fd1ff; --good:#8ef5a8; --warn:#ffd166; --bad:#ff7b7b;}
-  *{box-sizing:border-box}
-  .yd-wrap{background:var(--card);border:1px solid #203040;border-radius:16px;padding:18px}
-  .grid{display:grid;gap:16px}
-  @media(min-width:900px){.grid{grid-template-columns:1.2fr 1fr}}
-  .h{margin:0 0 8px;font-size:1.2rem}
-  .muted{color:var(--muted);font-size:.92rem}
-  .row{display:grid;gap:10px;grid-template-columns:1fr 1fr}
-  @media(max-width:620px){.row{grid-template-columns:1fr}}
-  label{display:grid;gap:6px;font-size:.9rem;color:var(--muted)}
-  input{background:#0e151c;color:var(--text);border:1px solid #223344;border-radius:10px;padding:10px 12px;font:inherit}
+  :root {
+    --bg: #0a0f14;
+    --card: #121a22;
+    --muted: #6b7a8a;
+    --text: #e6f1ff;
+    --accent: #4fd1ff;
+    --good: #8ef5a8;
+    --warn: #ffd166;
+    --bad: #ff7b7b;
+  }
+
+  * {
+    box-sizing: border-box
+  }
+
+  .yd-wrap {
+    background: var(--card);
+    border: 1px solid #203040;
+    border-radius: 16px;
+    padding: 18px
+  }
+
+  .grid {
+    display: grid;
+    gap: 16px
+  }
+
+  @media(min-width:900px) {
+    .grid {
+      grid-template-columns: 1.2fr 1fr
+    }
+  }
+
+  .h {
+    margin: 0 0 8px;
+    font-size: 1.2rem
+  }
+
+  .muted {
+    color: var(--muted);
+    font-size: .92rem
+  }
+
+  .row {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr
+  }
+
+  @media(max-width:620px) {
+    .row {
+      grid-template-columns: 1fr
+    }
+  }
+
+  label {
+    display: grid;
+    gap: 6px;
+    font-size: .9rem;
+    color: var(--muted)
+  }
+
+  input {
+    background: #0e151c;
+    color: var(--text);
+    border: 1px solid #223344;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit
+  }
   .row > * {
     margin: 0 !important;
   }
@@ -32,17 +91,81 @@ const TITLE = "Yeti Studio";
     padding:12px;
     text-align:center
   }
-  .kpi .num{font-weight:800;font-size:1.4rem}
-  .thermo{height:220px;border-radius:16px;background:#0b1218;border:1px solid #223344;position:relative;overflow:hidden}
-  .thermo-fill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#67e8f9,#00bcd4);transition:height .25s ease}
-  .thermo-cap{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:78px;height:78px;background:radial-gradient(circle at 35% 35%,#8ef5ff,#00bcd4 60%,#007a8a);border-radius:50%;border:3px solid #13414e}
-  table{width:100%;border-collapse:collapse;font-size:.95rem}
-  th,td{padding:10px;border-bottom:1px solid #213040}
-  th{text-align:left;color:var(--muted)}
-  .pill{display:inline-block;font-size:.75rem;padding:3px 8px;border-radius:999px;border:1px solid #2c3f52;color:#b8d4ff}
-  .flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .btn{cursor:pointer;background:linear-gradient(180deg,#1b2a38,#15222e);border:1px solid #2a4056;color:var(--text);border-radius:10px;padding:10px 12px}
-  .yeti-title{font-weight:800;letter-spacing:.6px;margin:0 0 4px}
+  .kpi .num {
+    font-weight: 800;
+    font-size: 1.4rem
+  }
+  .thermo {
+    height: 220px;
+    border-radius: 16px;
+    background: #0b1218;
+    border: 1px solid #223344;
+    position: relative;
+    overflow: hidden
+  }
+  .thermo-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, #67e8f9, #00bcd4);
+    transition: height .25s ease
+  }
+  .thermo-cap {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78px;
+    height: 78px;
+    background: radial-gradient(circle at 35% 35%, #8ef5ff, #00bcd4 60%, #007a8a);
+    border-radius: 50%;
+    border: 3px solid #13414e
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .95rem
+  }
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #213040
+  }
+  th {
+    text-align: left;
+    color: var(--muted)
+  }
+
+  .pill {
+    display: inline-block;
+    font-size: .75rem;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid #2c3f52;
+    color: #b8d4ff
+  }
+
+  .flex {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap
+  }
+
+  .btn {
+    cursor: pointer;
+    background: linear-gradient(180deg, #1b2a38, #15222e);
+    border: 1px solid #2a4056;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 12px
+  }
+
+  .yeti-title {
+    font-weight: 800;
+    letter-spacing: .6px;
+    margin: 0 0 4px
+  }
   /* Minimal progress bar */
 .progress {
   height: 8px;
@@ -146,7 +269,7 @@ const TITLE = "Yeti Studio";
     points: {
       // simple linear categories
       beatdown: { per: 10 },         // each BD = 10
-      ruckrun:  { per: 40 },         // each ruck/run = 40
+      ruckrun:  { per: 20 },         // each ruck/run = 40
       fng:      { per: 40 },         // each FNG = 40
 
       // scaling categories
@@ -352,7 +475,7 @@ const TITLE = "Yeti Studio";
         .map(([label, cur, next]) => ({ label, cur, next }))
         .sort((a,b)=> b.next - a.next)[0];
 
-      $distance.innerHTML = `You need <strong>${remaining}</strong> more points. 
+      $distance.innerHTML = `You need <strong>${remaining}</strong> more points.<br />
         Your best next move is <strong>${best.label}</strong> (+${best.next}).`;
     }
   }
