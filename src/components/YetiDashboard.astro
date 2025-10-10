@@ -67,16 +67,32 @@ const TITLE = "Yeti Studio";
   .kpis > * { margin: 0 !important; }
 
   .kpi {
-    background: var(--sl-color-bg);
-    border: 1px solid var(--sl-color-gray-6);
     border-radius: 12px;
     padding: 12px;
     text-align: center;
+
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-gray-6);
+    position: relative;
   }
   .kpi .num {
     font-weight: 800;
     font-size: 1.4rem;
     color: var(--sl-color-text);
+  }
+
+  html[data-theme="dark"] .kpi {
+    box-shadow:
+      0 6px 16px rgba(0,0,0,.30),
+      0 0 0 1px rgba(79, 209, 255, .18) inset;
+  }
+
+  html[data-theme="light"] .kpi {
+    background: var(--sl-color-bg);
+    border-color: var(--sl-color-gray-5);
+    box-shadow:
+      0 6px 12px rgba(0,0,0,.06),
+      0 0 0 1px rgba(0,0,0,.04) inset;
   }
 
   table {
